@@ -127,6 +127,11 @@ namespace BeatSaberMarkupLanguage
                     {
                         parserParams.values.Add(uivalue.id, new BSMLPropertyValue(host, propertyInfo));
                     }
+                    UICommandAttribute uicommand = propertyInfo.GetCustomAttributes(typeof(UICommandAttribute), true).FirstOrDefault() as UICommandAttribute;
+                    if (uicommand != null)
+                    {
+                        parserParams.commands.Add(uicommand.id, new BSMLCommand(host, propertyInfo));
+                    }
                 }
             }
 

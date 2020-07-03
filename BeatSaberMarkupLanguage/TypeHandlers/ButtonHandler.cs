@@ -45,6 +45,11 @@ namespace BeatSaberMarkupLanguage.TypeHandlers
                         parserParams.EmitEvent(clickEvent);
                     });
                 }
+
+                if(componentType.data.TryGetValue("command", out string commandStr))
+                {
+                    
+                }
                 base.HandleType(componentType, parserParams);
             }
             catch (Exception ex)

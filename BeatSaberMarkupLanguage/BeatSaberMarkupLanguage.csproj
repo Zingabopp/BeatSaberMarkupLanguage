@@ -128,6 +128,7 @@
     <Compile Include="Animations\LockBitmap.cs" />
     <Compile Include="Attributes\HotReloadAttribute.cs" />
     <Compile Include="Attributes\UIAction.cs" />
+    <Compile Include="Attributes\UICommandAttribute.cs" />
     <Compile Include="Attributes\UIComponent.cs" />
     <Compile Include="Attributes\UIObject.cs" />
     <Compile Include="Attributes\UIParams.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Components\ButtonIconImage.cs" />
     <Compile Include="Components\ClickableImage.cs" />
     <Compile Include="Components\ClickableText.cs" />
+    <Compile Include="Components\Commandable.cs" />
     <Compile Include="Components\CustomCellListTableData.cs" />
     <Compile Include="Components\ExternalComponents.cs" />
     <Compile Include="Components\FormattableText.cs" />
@@ -201,6 +203,7 @@
     <Compile Include="Components\Backgroundable.cs" />
     <Compile Include="Components\CustomListTableData.cs" />
     <Compile Include="Components\PageButton.cs" />
+    <Compile Include="Parser\BSMLCommand.cs" />
     <Compile Include="Parser\BSMLFieldValue.cs" />
     <Compile Include="Parser\BSMLParserParams.cs" />
     <Compile Include="Parser\BSMLPropertyValue.cs" />
