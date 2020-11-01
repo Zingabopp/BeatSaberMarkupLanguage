@@ -10,7 +10,8 @@ namespace BeatSaberMarkupLanguage.GameplaySetup
     public class GameplaySetup : PersistentSingleton<GameplaySetup>
     {
         private GameplaySetupViewController gameplaySetupViewController;
-        
+        private bool setupComplete;
+
         [UIValue("vanilla-items")]
         private List<Transform> vanillaItems = new List<Transform>();
 
@@ -30,6 +31,25 @@ namespace BeatSaberMarkupLanguage.GameplaySetup
             }
             (gameplaySetupViewController.transform.Find("HeaderPanel") as RectTransform).sizeDelta = new Vector2(90, 6);
             (gameplaySetupViewController.transform.Find("TextSegmentedControl") as RectTransform).anchoredPosition = new Vector2(0, -13);
+            setupComplete = true;
+            Reload();
+        }
+
+        internal void DestroyTabs()
+        {
+            foreach (var menu in menus)
+            {
+                if (menu is GameplaySetupMenu gpMenu)
+                    gpMenu.Destroy();
+            }
+        }
+
+        internal void Reload()
+        {
+            DestroyTabs();
+            if (!setupComplete)
+                return;
+            Logger.log?.Debug($"Reloading GameplayMenu");
             BSMLParser.instance.Parse(Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "BeatSaberMarkupLanguage.Views.gameplay-setup.bsml"), gameplaySetupViewController.gameObject, this);
         }
         
@@ -38,14 +58,20 @@ namespace BeatSaberMarkupLanguage.GameplaySetup
             if (menus.Any(x => (x as GameplaySetupMenu).name == name))
                 return;
             menus.Add(new GameplaySetupMenu(name, resource, host, Assembly.GetCallingAssembly()));
+            //Reload();
         }
 
         /// <summary>Warning, for now it will not be removed until fresh menu scene reload</summary>
         public void RemoveTab(string name)
         {
-            IEnumerable<object> menu = menus.Where(x => (x as GameplaySetupMenu).name == name);
-            if (menu.Count() > 0)
-                menus.Remove(menu.FirstOrDefault());
+            DestroyTabs();
+            object match = menus.Where(x => (x as GameplaySetupMenu).name == name).FirstOrDefault();
+            if (match is GameplaySetupMenu menu)
+            {
+                menus.Remove(match);
+                menu.Destroy();
+            }
+            //Reload();
         }
     }
 }
